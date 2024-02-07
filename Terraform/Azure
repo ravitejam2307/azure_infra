@@ -1,0 +1,30 @@
+terraform {
+    required_providers {
+        azurerm = {
+            source = "hashicorp/azurerm"
+            version = "2.46.0"
+        }
+    }
+}
+
+#Configure the Microsoft Azure Provider
+provider "azurerm" {
+    features {}
+    subscription_id = "5da0a9e4-e74f-4a1c-93dd-5af5b226153c"
+    client_id = ""
+    client_secret = ""
+    tenant_id = "40f38b8d-0fc6-4ac9-a011-ec9017122b83"
+}
+
+#Authenticating using a SAS Token associated with the Storage storage_account_name
+terraform {
+    backend "azurerm" {
+        storage_account_name = "demostorabc123"
+        container_name = "contf1"
+        key                  = "dev.terraform.tfstate"
+        key                  = "qa.terraform.tfstate"
+        key = "prod.terraform.tfstate"
+        sas_token            = "abcdefghijklmnopqrst123456"  #SAS Token
+    }
+}
+

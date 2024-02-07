@@ -1,0 +1,93 @@
+#Terraform
+
+#Components of Terraform
+1.Providers
+2.Resources
+3.Variables
+4.Statefile
+5.Backends or Remote State
+6.Modules
+7.Data Sources
+8.Local Variables
+9.Provisioners
+10.Workspaces
+11.Service Principals
+
+terraform validate
+terraform init
+terraform plan
+terraform apply or terraform apply --auto-approve
+terraform destroy
+
+#4.Statefile
+terraform import azurerm_resource_group.rg  resource_Id
+terraform import azurerm_subnet.subnet1 resource_Id     
+
+#5.Backends terraform init, terraform apply --auto-approve
+
+#Authenticating using a SAS Token associated with the Storage storage_account_name
+terraform {
+    backend "azurerm" {
+        storage_account_name = "demostorabc123"
+        container_name = "contf1"
+        key = "prod.terraform.tfstate"
+    
+        sas_token            = "abcdefghijklmnopqrst123456"
+    }
+}
+
+#Authenticating using the Azure CLI or a Service Principal
+terraform {
+    backend "azurerm" {
+        resource_group_name = "storacc-RG"
+        storage_account_name = "demostorabc123"
+        container_name = "contf1"
+        key = "prod.terraform.tfstate"
+    }
+}
+
+#Authenticating using Managed Service Identity (MSI)
+terraform {
+    backend "azurerm" {
+        resource_group_name = "storacc-RG"
+        storage_account_name = "demostorabc123"
+        container_name = "contf1"
+        key = "prod.terraform.tfstate"
+        use_msi   = true
+        subscription_id = "0000000000000"
+        tenant_id = "0000000000000"
+    }
+}
+
+#Authenticating using Azure AD Authentication
+terraform {
+    backend "azurerm" {
+        storage_account_name = "demostorabc123"
+        container_name = "contf1"
+        key = "prod.terraform.tfstate"
+        use_azuread_auth =  true
+        subscription_id  = "0000000000000000000"
+        tenant_id = "0000000000000000000"
+    }
+}
+
+
+#6.Modules  
+
+terraform init, 
+terraform plan, 
+terraform apply or terraform apply --target= module.module_dev, 
+terraform destroy or terraform destroy --target=module.module_prod
+
+
+#7.Data Sources
+1. created vnet from azure portal (vnet,subnet)
+2. created vm from terraform to deploy with vnet (which using already created from azure portal)
+   creating vm(nsg,network_security_rule,nsg_association with subnet,nic,vm) from terraform
+3. terraform init
+4. terraform plan
+5. terraform apply 
+
+
+#8.Local Variables
+    

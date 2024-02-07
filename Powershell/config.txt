@@ -1,0 +1,4 @@
+storagename: devstorage
+location: East US2
+Sku         : Standard_LRS
+rgName      : devrg
